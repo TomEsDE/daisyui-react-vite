@@ -29,6 +29,26 @@
   --color-button-muted: #75ef44;
 }
 
+.dark {
+  --color-text-base: #ffffff;
+  --color-text-muted: #cefeca;
+  --color-text-inverted: #171816;
+  --color-fill: 26, 28, 24;
+  --color-button-accent: #ffffff;
+  --color-button-accent-hover: #fef2f2;
+  --color-button-muted: #434642;
+}
+
+.light {
+  --color-text-base: #171816;
+  --color-text-muted: #434642;
+  --color-text-inverted: #ffffff;
+  --color-fill: 255, 255, 255;
+  --color-button-accent: #171816;
+  --color-button-accent-hover: #434642;
+  --color-button-muted: #ffffff;
+}
+
 .App {
   text-align: center;
   // background-color: var(--color-fill);
