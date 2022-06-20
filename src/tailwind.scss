@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-skin {
+  color: var(--color-primary);
+}
+
+.bg-skin {
+  background: rgb(var(--color-fill));
+}
+
+@mixin skin($bg, $clr, $opacity) {
+  background: rgb($bg);
+  color: rgb($clr);
+
+  &:hover {
+    background: rgb($bg, $opacity);
+    // opacity: $opacity;
+  }
+}
+
+.comp-skin {
+  // background: var(--color-tertiary);
+  // color: var(--color-primary);
+  @include skin(var(--color-tertiary), var(--color-primary), 0.7);
+}
+
+.comp-skin-2 {
+  --bg: 131, 2, 131;
+  --color: 217, 255, 0;
+  @include skin(var(--color), var(--bg), 0.8);
+  // @include skin(purple, yellow, 0.8);
+}

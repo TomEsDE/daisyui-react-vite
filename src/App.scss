@@ -1,0 +1,35 @@
+:root {
+  --color-text-base: #ffffff;
+  --color-text-muted: #c7d2fe;
+  --color-text-inverted: #4f46e5;
+  // --color-fill: #4338ca;
+  --color-fill: 67, 56, 202;
+  --color-button-accent: #ffffff;
+  --color-button-accent-hover: #d0d5eb;
+  --color-button-muted: #6366f1;
+}
+
+.red {
+  --color-text-base: #ffffff;
+  --color-text-muted: #fecaca;
+  --color-text-inverted: #dc2626;
+  --color-fill: 185, 28, 28;
+  --color-button-accent: #ffffff;
+  --color-button-accent-hover: #fef2f2;
+  --color-button-muted: #ef4444;
+}
+
+.green {
+  --color-text-base: #ffffff;
+  --color-text-muted: #cefeca;
+  --color-text-inverted: #60dc26;
+  --color-fill: 65, 185, 28;
+  --color-button-accent: #ffffff;
+  --color-button-accent-hover: #fef2f2;
+  --color-button-muted: #75ef44;
+}
+
+.App {
+  text-align: center;
+  // background-color: var(--color-fill);
+}
