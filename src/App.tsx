@@ -5,8 +5,8 @@ import './tailwind.scss';
 const themes = ['standard', 'red', 'green', 'new'];
 
 function App() {
-  const [clickCounter, setClickCounter] = useState(0);
-  const [theme, setTheme] = useState(themes[0]);
+  const [clickCounter, setClickCounter] = useState<number>(0);
+  const [theme, setTheme] = useState<string>(themes[0]);
 
   const handleClick = () => {
     setClickCounter(clickCounter + 1);
