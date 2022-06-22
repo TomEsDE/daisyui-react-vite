@@ -7,23 +7,69 @@ const themes: string[] = ['standard', 'red', 'green', 'dark', 'light'];
 
 interface IThemeContext {
   theme: string;
-  setTheme: (theme: string) => void;
+  // setTheme: (theme: string) => void;
+  changeTheme: () => void;
 }
 
 const defaultThemeContext: IThemeContext = {
   theme: themes[2],
-  setTheme: (theme: string): void => {},
+  // setTheme: (theme: string): void => {},
+  changeTheme: () => {},
 };
 
 // const ThemeContext = createContext<IThemeContext | null>(null);
 const ThemeContext = createContext<IThemeContext>(defaultThemeContext);
 
-const ThemeContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<string>(defaultThemeContext.theme);
+const ThemeContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element => {
+  const [theme, setTheme] = useState(defaultThemeContext.theme);
+  const changeTheme = (): void => {
+    setTheme(
+      themes.indexOf(theme) === themes.length - 1
+        ? themes[0]
+        : themes[themes.indexOf(theme) + 1]
+    );
+  };
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, changeTheme }}>
       {children}
     </ThemeContext.Provider>
+  );
+};
+
+interface IButtonProps {
+  changeTheme: () => void;
+  children: React.ReactNode;
+  style?: 'inverted' | 'standard';
+}
+
+const MyButton: React.FC<IButtonProps> = ({
+  changeTheme,
+  children,
+  style = 'standard',
+}): JSX.Element => {
+  const getButtonStyle = () => {
+    switch (style) {
+      case 'inverted':
+        return 'text-skin-base bg-skin-button-muted hover:bg-opacity-20';
+      case 'standard':
+        return 'text-skin-inverted bg-skin-button-accent hover:bg-skin-button-accent-hover';
+      default:
+        return 'text-skin-base bg-skin-button-muted hover:bg-opacity-20';
+    }
+  };
+
+  return (
+    <button
+      onClick={changeTheme}
+      className={`btn ${getButtonStyle()} border-0`}
+    >
+      {children}
+    </button>
   );
 };
 
@@ -39,20 +85,11 @@ function App() {
 }
 
 function Page() {
-  const [clickCounter, setClickCounter] = useState<number>(0);
-  // const [theme, setTheme] = useState<string>(themes[0]);
+  const [clickCounter, setClickCounter] = useState(0);
+  // const [theme, setTheme] = useState(themes[0]);
 
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, changeTheme } = useContext(ThemeContext);
   // const { theme, setTheme } = useContext(ThemeContext) || defaultThemeContext;
-
-  const handleClick = (): void => {
-    setClickCounter(clickCounter + 1);
-    setTheme(
-      themes.indexOf(theme) === themes.length - 1
-        ? themes[0]
-        : themes[themes.indexOf(theme) + 1]
-    );
-  };
 
   return (
     <div className={`App ${theme}`}>
@@ -60,25 +97,16 @@ function Page() {
 
       <div className="p-4 m-8 rounded-xl bg-skin-fill bg-opacity-50">
         <div className="p-4 text-skin-base text-5xl">Home</div>
-        {/* <button
-          onClick={handleClick}
-          className="btn tablet:text-lg desktop:text-2xl"
-        >
-          Hello daisyUI
-        </button> */}
         <div className="flex justify-center gap-6 flex-col tablet:flex-row">
-          <button
-            onClick={handleClick}
-            className="btn text-skin-inverted bg-skin-button-accent hover:bg-skin-button-accent-hover border-0"
-          >
+          <MyButton changeTheme={changeTheme} style={'inverted'}>
+            Hello daisyUI
+          </MyButton>
+          <MyButton changeTheme={changeTheme} style={'standard'}>
             first button
-          </button>
-          <button
-            onClick={handleClick}
-            className="btn text-skin-base bg-skin-button-muted hover:bg-opacity-20 border-0"
-          >
+          </MyButton>
+          <MyButton changeTheme={changeTheme} style={'inverted'}>
             second button
-          </button>
+          </MyButton>
         </div>
         <div className="pt-2 text-skin-base">{clickCounter}</div>
         <NavLink
@@ -93,20 +121,11 @@ function Page() {
 }
 
 function PageTwo() {
-  const [clickCounter, setClickCounter] = useState<number>(0);
-  // const [theme, setTheme] = useState<string>(themes[0]);
+  const [clickCounter, setClickCounter] = useState(0);
+  // const [theme, setTheme] = useState(themes[0]);
 
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, changeTheme } = useContext(ThemeContext);
   // const { theme, setTheme } = useContext(ThemeContext) || defaultThemeContext;
-
-  const handleClick = (): void => {
-    setClickCounter(clickCounter + 1);
-    setTheme(
-      themes.indexOf(theme) === themes.length - 1
-        ? themes[0]
-        : themes[themes.indexOf(theme) + 1]
-    );
-  };
 
   return (
     <div className={`App ${theme}`}>
@@ -121,18 +140,12 @@ function PageTwo() {
           Hello daisyUI
         </button> */}
         <div className="flex justify-center gap-6 flex-col tablet:flex-row">
-          <button
-            onClick={handleClick}
-            className="btn text-skin-inverted bg-skin-button-accent hover:bg-skin-button-accent-hover border-0"
-          >
+          <MyButton changeTheme={changeTheme} style={'standard'}>
             first button Page2
-          </button>
-          <button
-            onClick={handleClick}
-            className="btn text-skin-base bg-skin-button-muted hover:bg-opacity-20 border-0"
-          >
+          </MyButton>
+          <MyButton changeTheme={changeTheme} style={'inverted'}>
             second button Page2
-          </button>
+          </MyButton>
         </div>
         <div className="pt-2 text-skin-base">{clickCounter}</div>
         <NavLink className={'link text-skin-base inline-block mt-4'} to={'/'}>
