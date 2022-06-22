@@ -20,11 +20,10 @@ const defaultThemeContext: IThemeContext = {
 // const ThemeContext = createContext<IThemeContext | null>(null);
 const ThemeContext = createContext<IThemeContext>(defaultThemeContext);
 
-const ThemeContextProvider = ({
-  children,
-}: {
+interface IContextProps {
   children: React.ReactNode;
-}): JSX.Element => {
+}
+const ThemeContextProvider: React.FC<IContextProps> = ({ children }) => {
   const [theme, setTheme] = useState(defaultThemeContext.theme);
   const changeTheme = (): void => {
     setTheme(
@@ -88,12 +87,17 @@ function Page() {
   const [clickCounter, setClickCounter] = useState(0);
   // const [theme, setTheme] = useState(themes[0]);
 
-  const { theme, changeTheme } = useContext(ThemeContext);
+  const ctx = useContext(ThemeContext);
   // const { theme, setTheme } = useContext(ThemeContext) || defaultThemeContext;
 
+  const changeTheme = (): void => {
+    ctx.changeTheme();
+    setClickCounter(clickCounter + 1);
+  };
+
   return (
-    <div className={`App ${theme}`}>
-      <div className="pt-4 uppercase">theme: {theme}</div>
+    <div className={`App ${ctx.theme}`}>
+      <div className="pt-4 uppercase">theme: {ctx.theme}</div>
 
       <div className="p-4 m-8 rounded-xl bg-skin-fill bg-opacity-50">
         <div className="p-4 text-skin-base text-5xl">Home</div>
