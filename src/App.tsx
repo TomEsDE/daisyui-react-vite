@@ -17,8 +17,10 @@ const defaultThemeContext: IThemeContext = {
   changeTheme: () => {},
 };
 
+const ThemeContext = createContext<IThemeContext>(null!);
+// const ThemeContext = createContext({} as IThemeContext);
 // const ThemeContext = createContext<IThemeContext | null>(null);
-const ThemeContext = createContext<IThemeContext>(defaultThemeContext);
+// const ThemeContext = createContext<IThemeContext>(defaultThemeContext);
 
 interface IContextProps {
   children: React.ReactNode;
@@ -88,6 +90,8 @@ function Page() {
   // const [theme, setTheme] = useState(themes[0]);
 
   const ctx = useContext(ThemeContext);
+  if (!ctx) return <div>Loading...</div>;
+  // const { theme, changeTheme } = useContext(ThemeContext);
   // const { theme, setTheme } = useContext(ThemeContext) || defaultThemeContext;
 
   const changeTheme = (): void => {
